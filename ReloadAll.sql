@@ -1,5 +1,6 @@
-delete from FactExam
-delete from FactExamLimit
+use [DataDW]
+delete from FactData
+delete from FactDataLimit
 delete from DimLimit
 delete from DimGroup
 --delete from [DataDW]..DimDate
@@ -52,7 +53,7 @@ into ##Groups3
 --drop table #Groups3
 from  ##Groups2 cross apply string_split(fullNameWithSeq, '\')
 
-insert into DimGroup
+insert into [DataDW]..[DimGroup]
 select
 SUBSTRING(FullName, 0, 400) AS FullName,
 [0] as level0,
@@ -76,7 +77,7 @@ pivot
 ----------------------------------------------------------
 ---------------- DimLimit --------------------------------
 
-insert into DimLimit
+insert into [DataDW]..[DimLimit]
 select 
 NEWID() as Id,
 g.FullName,
@@ -95,10 +96,10 @@ from [DataContextContext-20180321055800]..LimitDecimal l
 left join [DataDW]..DimGroup g
 on l.GroupId = g.id
 
-insert into [DataDW]..DimLimit (Id, FullName, Name, Description, Min, Max, Priority) values
+insert into [DataDW]..[DimLimit] (Id, FullName, Name, Description, Min, Max, Priority) values
 ('92DBC513-4FBD-4FB7-AC64-B5AAAD07C77D', null, 'Sem Limite', 'Sem Limite', null, null, 0)
 
-insert into [DataDW]..DimLimit
+insert into [DataDW]..[DimLimit]
 select
 NEWID() as Id,
 FullName,
@@ -116,9 +117,9 @@ GroupId,
 Priority
 
 ----------------------------------------------------------
----------------------- FactExam --------------------------
+---------------------- FactData --------------------------
 
-insert into FactExam
+insert into [DataDW]..[FactData]
 select 
 --top 1
 SUBSTRING(FullName, 0, 400) as FullName, 
@@ -129,12 +130,12 @@ e.DecimalValue,
 g.MeasureUnit,
 e.StringValue, 
 case Discriminator 
-	when 'ExamDecimal' then ld.Name
-	when 'ExamString' then ls.Expected
+	when 'DataDecimal' then ld.Name
+	when 'DataString' then ls.Expected
 end as LimitName,
 case Discriminator 
-	when 'ExamString' then ls.Expected
-	when 'ExamDecimal' then 
+	when 'DataString' then ls.Expected
+	when 'DataDecimal' then 
 	case
 		when Max is null and Min is null then null
 		when Max is null and Min is not null then 
@@ -166,12 +167,12 @@ case Discriminator
 	end
 end as LimitDescription,
 case Discriminator 
-	when 'ExamDecimal' then ld.Color
-	when 'ExamString' then ls.Color
+	when 'DataDecimal' then ld.Color
+	when 'DataString' then ls.Color
 end as LimitColor,
 e.Discriminator, 
 CONVERT(char(4), YEAR(e.CollectionDate)) + FORMAT(e.CollectionDate,'MM') + FORMAT(e.CollectionDate,'dd') as DateKey
-from [DataContextContext-20180321055800]..Exam e
+from [DataContextContext-20180321055800]..[Data] e
 inner join ##Groups2 g 
 on e.GroupId = g.Id
 left join [DataContextContext-20180321055800]..LimitDecimalDenormalized ld 
@@ -180,14 +181,14 @@ left join [DataContextContext-20180321055800]..LimitStringDenormalized ls
 on e.GroupId = ls.GroupId and e.CollectionDate = ls.CollectionDate
 
 ----------------------------------------------------------
----------------- FactExamLimit ---------------------------
+---------------- FactDataLimit ---------------------------
 
-insert into [DataDW]..FactExamLimit
+insert into [DataDW]..[FactDataLimit]
 select 
 ISNULL(l.Id, '92DBC513-4FBD-4FB7-AC64-B5AAAD07C77D') as LimitId,
 --l2.Description,
 e.*
-from [DataDW]..FactExam e
+from [DataDW]..FactData e
 left join [DataDW]..DimLimit l
 on e.FullName = l.FullName and ((l.Min is not null and e.DecimalValue >= l.Min and e.DecimalValue < l.Max) or (l.Min is null and e.DecimalValue < l.Max))
 
