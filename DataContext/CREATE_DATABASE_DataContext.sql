@@ -10,6 +10,9 @@ CREATE DATABASE [DataContext]
 ( NAME = N'DataContext_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\DataContext_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
 GO
 
+ALTER DATABASE [DataContext] SET COMPATIBILITY_LEVEL = 140
+GO
+
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
 begin
 EXEC [DataContext].[dbo].[sp_fulltext_database] @action = 'enable'
