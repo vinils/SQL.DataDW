@@ -14,9 +14,7 @@ WORKDIR .\DataAnalyze
 
 #SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-##bug - Sqlcmd: Error: Microsoft ODBC Driver 13 for SQL Server : TCP Provider: No connection could be made because the target machine actively refused it
-#RUN sqlcmd -S localhost,1433 -i .\DataContext\CREATE_DATABASE_DataContext.sql ; \
-RUN do { $count = $count + 1; $healfcheck = (sqlcmd -S localhost,1433 -i .\DataContext\CREATE_DATABASE_DataContext.sql); Start-Sleep -Seconds 10 } while(!$healfcheck -and $count -ne 60) ;
+RUN createdb.ps1
 
 RUN sqlcmd -S localhost,1433 -i .\DataContext\CREATE_TABLE_Data.sql ; \
 		sqlcmd -S localhost,1433 -i .\DataContext\CREATE_TABLE_Group.sql ; \
