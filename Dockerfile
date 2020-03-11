@@ -14,7 +14,7 @@ WORKDIR .\DataAnalyze
 
 #SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-RUN createdb.ps1
+RUN .\createdb.ps1
 
 RUN sqlcmd -S localhost,1433 -i .\DataContext\CREATE_TABLE_Data.sql ; \
 		sqlcmd -S localhost,1433 -i .\DataContext\CREATE_TABLE_Group.sql ; \
