@@ -1,0 +1,10 @@
+FROM mcr.microsoft.com/mssql/server:2019-latest
+
+# escape=`
+
+COPY . ./DataAnalyze
+WORKDIR ./DataAnalyze
+
+#SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+
+ENTRYPOINT ["/DataAnalyze/entrypoint.sh"]

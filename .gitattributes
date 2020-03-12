@@ -1,1 +1,3 @@
 createdb.sh eol=lf
+DataContext/CREATE_DATABASE_DataContext_linux.sql eol=lf
+DataDW/CREATE_DATABASE_DataDW_linus.sql eol=lf
