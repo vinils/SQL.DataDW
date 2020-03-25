@@ -1,7 +1,7 @@
 USE [DataContext]
 GO
 
-/****** Object:  Table [dbo].[Group]    Script Date: 8/11/2019 3:24:59 PM ******/
+/****** Object:  Table [dbo].[Group]    Script Date: 3/24/2020 6:44:25 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -14,9 +14,10 @@ CREATE TABLE [dbo].[Group](
 	[Initials] [nvarchar](max) NULL,
 	[ParentId] [uniqueidentifier] NULL,
 	[MeasureUnit] [nvarchar](max) NULL,
- CONSTRAINT [PK_dbo.Group] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Group] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
+

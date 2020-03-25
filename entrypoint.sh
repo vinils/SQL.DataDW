@@ -41,6 +41,10 @@ echo "======= MSSQL SERVER STARTED ========"
 
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $SA_PASSWORD -Q "EXEC DataDW.[dbo].[SP_DimDate] @startdate='$start_date', @enddate='$end_date'"
 
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $SA_PASSWORD -Q "EXEC master.dbo.sp_addlinkedserver @server='$dataContextDb,1433', @srvproduct=N'SQL Server'"
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $SA_PASSWORD -Q "EXEC master.dbo.sp_addlinkedsrvlogin @rmtuser=N'sa', @rmtpassword=N'$dataContextPassword', @rmtsrvname=N'$dataContextDb,1433', @locallogin=NULL, @useself=N'False'"
+
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $SA_PASSWORD -i /DataAnalyze/CREATE_JOB.sql
+
 
 sleep infinity

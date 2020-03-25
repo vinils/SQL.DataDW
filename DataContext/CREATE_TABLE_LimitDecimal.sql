@@ -1,7 +1,7 @@
 USE [DataContext]
 GO
 
-/****** Object:  Table [dbo].[LimitDecimal]    Script Date: 8/11/2019 3:26:04 PM ******/
+/****** Object:  Table [dbo].[LimitDecimal]    Script Date: 3/24/2020 6:49:36 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -14,11 +14,12 @@ CREATE TABLE [dbo].[LimitDecimal](
 	[Max] [decimal](18, 2) NOT NULL,
 	[Min] [decimal](18, 2) NULL,
 	[Name] [nvarchar](max) NULL,
- CONSTRAINT [PK_dbo.LimitDecimal] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_LimitDecimal] PRIMARY KEY CLUSTERED 
 (
 	[GroupId] ASC,
 	[Priority] ASC,
 	[Max] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
+
