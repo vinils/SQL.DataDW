@@ -8,4 +8,4 @@
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $SA_PASSWORD -Q "INSERT INTO [DataContext].[dbo].[LimitDecimalDenormalized] SELECT * FROM [$dataContextDb,1433].[DataContext].[dbo].[LimitDecimalDenormalized]"
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $SA_PASSWORD -Q "TRUNCATE TABLE [DataContext].[dbo].[LimitStringDenormalized]"
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $SA_PASSWORD -Q "INSERT INTO [DataContext].[dbo].[LimitStringDenormalized] SELECT * FROM [$dataContextDb,1433].[DataContext].[dbo].[LimitStringDenormalized]"
-/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $SA_PASSWORD -Q "EXEC [DataDW].[dbo].[SP_Reload]"
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $SA_PASSWORD -Q "EXEC [DataDW].[dbo].[SP_Load]"
